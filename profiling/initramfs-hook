@@ -1,0 +1,24 @@
+#!/bin/sh -e
+# initramfs hook for fsopt profiler
+
+PREREQ=""
+
+# Output pre-requisites
+prereqs()
+{
+    echo "$PREREQ"
+}
+
+case $1 in
+    prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+
+. /usr/share/initramfs-tools/hook-functions
+
+# Copy the collector
+mkdir -p ${DESTDIR}/lib/fsopt
+copy_exec /fsopt-watcher /lib/fsopt/watcher

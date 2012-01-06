@@ -1,0 +1,5 @@
+Small daemon running in the background, logging file-accesses.
+
+Can be installed to initramfs with the provided hooks and script.
+
+Install with "make install", regenerate initramfs and boot with "fsopt" in the kernel cmdline.

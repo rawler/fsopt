@@ -1,0 +1,31 @@
+#!/bin/sh -e
+# initramfs init-bottom for fsopt
+
+PREREQ=""
+
+# Output pre-requisites
+prereqs()
+{
+    echo "$PREREQ"
+}
+
+case $1 in
+    prereqs)
+	prereqs
+	exit 0
+	;;
+esac
+
+# Where we run
+HOME="/dev/.fsopt"
+
+grep -q "fsopt" /proc/cmdline || exit 0
+
+mkdir $HOME
+cd $HOME
+
+mkdir procfs
+mount -o bind /proc procfs
+
+/lib/fsopt/watcher ${rootmnt} procfs > results 2>/dev/null &
+echo $! > /dev/.initramfs/fsopt.pid
